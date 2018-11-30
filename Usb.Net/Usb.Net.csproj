@@ -5,6 +5,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseUrl>https://github.com/MelbourneDeveloper/Usb.Net</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/MelbourneDeveloper/Usb.Net</PackageProjectUrl>
+    <Description>A cross platform Hid/USB library written in C#
+
+Note: This is a placeholder NuGet for now. Please see this library https://github.com/MelbourneDeveloper/Hid.Net</Description>
   </PropertyGroup>
 
 </Project>
