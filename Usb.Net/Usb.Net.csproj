@@ -11,4 +11,8 @@
 Note: This is a placeholder NuGet for now. Please see this library https://github.com/MelbourneDeveloper/Hid.Net</Description>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Device.Net" Version="1.3.0" />
+  </ItemGroup>
+
 </Project>
