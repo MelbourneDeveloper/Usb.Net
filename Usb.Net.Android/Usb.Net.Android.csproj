@@ -50,7 +50,7 @@
     <Compile Include="UsbDeviceAttachedReceiver.cs" />
     <Compile Include="UsbDeviceDetachedReceiver.cs" />
     <Compile Include="UsbPermissionBroadcastReceiver.cs" />
-    <Compile Include="AndroidHidDevice.cs" />
+    <Compile Include="AndroidUsbDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

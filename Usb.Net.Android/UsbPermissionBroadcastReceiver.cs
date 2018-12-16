@@ -4,7 +4,7 @@ using Android.Hardware.Usb;
 using Device.Net;
 using System;
 
-namespace Hid.Net.Android
+namespace Usb.Net.Android
 {
     public class UsbPermissionBroadcastReceiver : BroadcastReceiver
     {
@@ -50,7 +50,7 @@ namespace Hid.Net.Android
         {
             _IsPermissionGranted = intent.GetBooleanExtra(UsbManager.ExtraPermissionGranted, false);
 
-            Logger.Log($"USB permission broadcast received. Result: {_IsPermissionGranted}", null, AndroidHidDevice.LogSection);
+            Logger.Log($"USB permission broadcast received. Result: {_IsPermissionGranted}", null, AndroidUsbDevice.LogSection);
 
             context.UnregisterReceiver(this);
             Received?.Invoke(this, new EventArgs());

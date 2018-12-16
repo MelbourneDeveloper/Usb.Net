@@ -7,9 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hid.Net.Android
+namespace Usb.Net.Android
 {
-    public class AndroidHidDevice : DeviceBase, IDevice
+    public class AndroidUsbDevice : DeviceBase, IDevice
     {
         #region Fields
         private UsbDeviceConnection _UsbDeviceConnection;
@@ -39,7 +39,7 @@ namespace Hid.Net.Android
         #endregion
 
         #region Constructor
-        public AndroidHidDevice(UsbManager usbManager, Context androidContext, int timeoutMilliseconds, int readBufferLength, int vendorId, int productId)
+        public AndroidUsbDevice(UsbManager usbManager, Context androidContext, int timeoutMilliseconds, int readBufferLength, int vendorId, int productId)
         {
             UsbManager = usbManager;
             AndroidContext = androidContext;

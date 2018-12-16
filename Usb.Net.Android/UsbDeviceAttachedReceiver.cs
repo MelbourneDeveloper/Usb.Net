@@ -2,16 +2,16 @@
 using Android.Hardware.Usb;
 using Device.Net;
 
-namespace Hid.Net.Android
+namespace Usb.Net.Android
 {
     public class UsbDeviceAttachedReceiver : BroadcastReceiver
     {
         #region Fields
-        readonly AndroidHidDevice _AndroidHidDevice;
+        readonly AndroidUsbDevice _AndroidHidDevice;
         #endregion
 
         #region Constructor
-        public UsbDeviceAttachedReceiver(AndroidHidDevice androidHidDevice)
+        public UsbDeviceAttachedReceiver(AndroidUsbDevice androidHidDevice)
         {
             _AndroidHidDevice = androidHidDevice;
         }
@@ -25,7 +25,7 @@ namespace Hid.Net.Android
             if (_AndroidHidDevice == null || device == null || device.VendorId != _AndroidHidDevice.VendorId || device.ProductId != _AndroidHidDevice.ProductId) return;
 
             await _AndroidHidDevice.UsbDeviceAttached();
-            Logger.Log("Device connected", null, AndroidHidDevice.LogSection);
+            Logger.Log("Device connected", null, AndroidUsbDevice.LogSection);
         }
         #endregion
     }
