@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Device.Net" Version="1.3.0" />
+    <PackageReference Include="Device.Net" Version="2.0.0" />
   </ItemGroup>
 
 </Project>
