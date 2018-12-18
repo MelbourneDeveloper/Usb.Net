@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Usb.Net.Android", "Usb.Net.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Usb.Net.Sample", "Usb.Net.Sample\Usb.Net.Sample.csproj", "{5143147A-5B74-4849-B6BF-F692BE3AAA7C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device.Net", "..\Device.Net\Device.Net\Device.Net\Device.Net.csproj", "{55588C7B-5897-4FB3-8078-9A749FB61D36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5143147A-5B74-4849-B6BF-F692BE3AAA7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5143147A-5B74-4849-B6BF-F692BE3AAA7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5143147A-5B74-4849-B6BF-F692BE3AAA7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55588C7B-5897-4FB3-8078-9A749FB61D36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55588C7B-5897-4FB3-8078-9A749FB61D36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55588C7B-5897-4FB3-8078-9A749FB61D36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55588C7B-5897-4FB3-8078-9A749FB61D36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

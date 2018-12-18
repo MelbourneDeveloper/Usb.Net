@@ -1,7 +1,7 @@
 ﻿using Device.Net;
 using System;
 
-namespace Hid.Net
+namespace Device.Net
 {
     public class WindowsUsbDevice : WindowsDeviceBase
     {
