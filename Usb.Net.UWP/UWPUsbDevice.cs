@@ -88,18 +88,25 @@ namespace Usb.Net.UWP
 
         public async Task<byte[]> ReadAsync()
         {
-            //if (_LastReadData == null)
-            //{
-            //    throw new Exception("No data has been read");
-            //}
-            //var retVal = new byte[64];
-            //_LastReadData.CopyTo(0, retVal, 0, 64);
+            var bytes = new byte[64];
+            var buffer = bytes.AsBuffer();
+            var setupPacket = new UsbSetupPacket()
+            {
+                RequestType = new UsbControlRequestType()
+                {
+                    Recipient = UsbControlRecipient.Endpoint,
+                    //Direction = UsbTransferDirection.In
+                }
+            };
 
-            //_LastReadData = null;
+            var buffer2 = await _UsbDevice.SendControlInTransferAsync(setupPacket, buffer);
 
-            //_UsbDevice.SendControlOutTransferAsync()
+            var stream = buffer2.AsStream();
+            stream.Read(bytes, 0, 64);
 
-            return null;
+            var returnValue = buffer2.ToArray();
+
+            return returnValue;
         }
 
         public async Task WriteAsync(byte[] bytes)
@@ -114,7 +121,7 @@ namespace Usb.Net.UWP
                     RequestType = new UsbControlRequestType()
                     {
                         Recipient = UsbControlRecipient.Endpoint,
-
+                        //Direction = UsbTransferDirection.Out,
                     }
                 };
 
