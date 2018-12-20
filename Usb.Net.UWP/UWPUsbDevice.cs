@@ -114,9 +114,8 @@ namespace Usb.Net.UWP
                 {
                     RequestType = new UsbControlRequestType()
                     {
-                        Recipient = UsbControlRecipient.DefaultInterface,
+                        Recipient = UsbControlRecipient.Endpoint,
 
-                        ControlTransferType = UsbControlTransferType.Vendor
                     }
                 };
 
