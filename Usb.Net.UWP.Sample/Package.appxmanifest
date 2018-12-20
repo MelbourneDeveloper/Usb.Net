@@ -49,10 +49,18 @@
     <uap:Capability Name="removableStorage" />
 
     <DeviceCapability Name="usb">
+
+      <!--Trezor Firmware 1.7.x -->
       <Device Id="vidpid:1209 53C1">
+        <Function Type="name:vendorSpecific"/>
+      </Device>
+
+      <!--Trezor Firmware 1.6.x -->
+      <Device Id="vidpid:534C 0001">
         <Function Type="name:vendorSpecific"/>
         <!--<Function Type="classId:ff * *" />-->
       </Device>
+
     </DeviceCapability>
     
   </Capabilities>
