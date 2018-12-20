@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -19,8 +20,8 @@ namespace Usb.Net.UWP.Sample
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             Loaded -= MainPage_Loaded;
-            var asdasd = UWPHidDevice.
-
+            var allDevices = await UWPHelpers.GetDevicesByProductAndVendorAsync(0,0);
+            var trezorUsbDevice = allDevices.FirstOrDefault(d => d.Id.ToLower().Contains("534c") && !d.Id.ToLower().Contains("hid"));
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Usb.Net.UWP
     {
         public static async Task<List<wde.DeviceInformation>> GetDevicesByProductAndVendorAsync(int vendorId, int productId)
         {
-            return ((IEnumerable<wde.DeviceInformation>)await wde.DeviceInformation.FindAllAsync($"System.Devices.InterfaceEnabled:=System.StructuredQueryType.Boolean#True AND System.DeviceInterface.Hid.VendorId:={vendorId} AND System.DeviceInterface.Hid.ProductId:={productId} ").AsTask()).ToList();
+            return ((IEnumerable<wde.DeviceInformation>)await wde.DeviceInformation.FindAllAsync().AsTask()).ToList();
         }
 
         public static async Task<wde.DeviceInformationCollection> GetAllDevicesAsync()

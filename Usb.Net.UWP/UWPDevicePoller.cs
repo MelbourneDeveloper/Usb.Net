@@ -18,7 +18,7 @@ namespace Usb.Net.UWP
         #endregion
 
         #region Constructor
-        public UWPHidDevicePoller(int productId, int vendorId, UWPUsbDevice uwpHidDevice)
+        public UWPDevicePoller(int productId, int vendorId, UWPUsbDevice uwpHidDevice)
         {
             _PollTimer.Elapsed += _PollTimer_Elapsed;
             _PollTimer.Start();
@@ -63,13 +63,13 @@ namespace Usb.Net.UWP
                     }
                     catch (Exception ex)
                     {
-                        Logger.Log("Error connecting to device", ex, nameof(UWPHidDevicePoller));
+                        Logger.Log("Error connecting to device", ex, nameof(UWPDevicePoller));
                     }
                 }
             }
             catch (Exception ex)
             {
-                Logger.Log("Hid polling error", ex, nameof(UWPHidDevicePoller));
+                Logger.Log("Hid polling error", ex, nameof(UWPDevicePoller));
             }
 
             _IsPolling = false;
