@@ -5,7 +5,6 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Devices.HumanInterfaceDevice;
 using Windows.Devices.Usb;
-using Windows.Storage.Streams;
 
 namespace Usb.Net.UWP
 {
@@ -18,8 +17,6 @@ namespace Usb.Net.UWP
 
         #region Fields
         private UsbDevice _UsbDevice;
-        private readonly bool _IsReading;
-        private IBuffer _LastReadData;
         #endregion
 
         #region Public Properties
@@ -91,16 +88,18 @@ namespace Usb.Net.UWP
 
         public async Task<byte[]> ReadAsync()
         {
-            if (_LastReadData == null)
-            {
-                throw new Exception("No data has been read");
-            }
-            var retVal = new byte[64];
-            _LastReadData.CopyTo(0, retVal, 0, 64);
+            //if (_LastReadData == null)
+            //{
+            //    throw new Exception("No data has been read");
+            //}
+            //var retVal = new byte[64];
+            //_LastReadData.CopyTo(0, retVal, 0, 64);
 
-            _LastReadData = null;
+            //_LastReadData = null;
 
-            return retVal;
+            //_UsbDevice.SendControlOutTransferAsync()
+
+            return null;
         }
 
         public async Task WriteAsync(byte[] bytes)
@@ -119,8 +118,7 @@ namespace Usb.Net.UWP
                     }
                 };
 
-                _LastReadData = await _UsbDevice.SendControlInTransferAsync(setupPacket, buffer);
-
+                await _UsbDevice.SendControlOutTransferAsync(setupPacket, buffer);
             }
             catch (ArgumentException ex)
             {
