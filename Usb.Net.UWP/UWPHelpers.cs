@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using wde = Windows.Devices.Enumeration;
 
-namespace Hid.Net.UWP
+namespace Usb.Net.UWP
 {
     public static class UWPHelpers
     {

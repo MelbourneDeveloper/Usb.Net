@@ -7,9 +7,9 @@ using Windows.Devices.HumanInterfaceDevice;
 using Windows.Devices.Usb;
 using Windows.Storage.Streams;
 
-namespace Hid.Net.UWP
+namespace Usb.Net.UWP
 {
-    public class UWPHidDevice : DeviceBase, IDevice
+    public class UWPUsbDevice : DeviceBase, IDevice
     {
         #region Events
         public event EventHandler Connected;
@@ -51,11 +51,11 @@ namespace Hid.Net.UWP
         #endregion
 
         #region Constructors
-        public UWPHidDevice()
+        public UWPUsbDevice()
         {
         }
 
-        public UWPHidDevice(string deviceId)
+        public UWPUsbDevice(string deviceId)
         {
             DeviceId = deviceId;
         }
@@ -63,7 +63,7 @@ namespace Hid.Net.UWP
         /// <summary>
         /// TODO: Further filter by UsagePage. The problem is that this syntax never seems to work: AND System.DeviceInterface.Hid.UsagePage:=?? 
         /// </summary>
-        public UWPHidDevice(int vendorId, int productId)
+        public UWPUsbDevice(int vendorId, int productId)
         {
             VendorId = vendorId;
             ProductId = productId;
@@ -78,7 +78,7 @@ namespace Hid.Net.UWP
             //TODO: Dispose but this seems to cause initialization to never occur
             //Dispose();
 
-            Logger.Log("Initializing Hid device", null, nameof(UWPHidDevice));
+            Logger.Log("Initializing Hid device", null, nameof(UWPUsbDevice));
 
             if (string.IsNullOrEmpty(DeviceId))
             {
@@ -94,7 +94,7 @@ namespace Hid.Net.UWP
                     try
                     {
                         //Attempt to connect
-                        Logger.Log($"Attempting to connect to device Id {deviceInformation.Id} ...", null, nameof(UWPHidDevice));
+                        Logger.Log($"Attempting to connect to device Id {deviceInformation.Id} ...", null, nameof(UWPUsbDevice));
 
                         var hidDevice = await GetDevice(deviceInformation.Id);
 
@@ -108,7 +108,7 @@ namespace Hid.Net.UWP
                     }
                     catch (Exception ex)
                     {
-                        Logger.Log($"Error attempting to connect to {deviceInformation.Id}", ex, nameof(UWPHidDevice));
+                        Logger.Log($"Error attempting to connect to {deviceInformation.Id}", ex, nameof(UWPUsbDevice));
                     }
                 }
 

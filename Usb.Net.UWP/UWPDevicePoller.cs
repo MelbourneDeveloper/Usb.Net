@@ -2,9 +2,9 @@
 using System;
 using System.Timers;
 
-namespace Hid.Net.UWP
+namespace Usb.Net.UWP
 {
-    public class UWPHidDevicePoller
+    public class UWPDevicePoller
     {
         #region Fields
         private Timer _PollTimer = new Timer(3000);
@@ -14,11 +14,11 @@ namespace Hid.Net.UWP
         #region Public Properties
         public int ProductId { get; }
         public int VendorId { get; }
-        public UWPHidDevice UWPHidDevice { get; private set; }
+        public UWPUsbDevice UWPHidDevice { get; private set; }
         #endregion
 
         #region Constructor
-        public UWPHidDevicePoller(int productId, int vendorId, UWPHidDevice uwpHidDevice)
+        public UWPHidDevicePoller(int productId, int vendorId, UWPUsbDevice uwpHidDevice)
         {
             _PollTimer.Elapsed += _PollTimer_Elapsed;
             _PollTimer.Start();
