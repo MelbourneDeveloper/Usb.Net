@@ -19,7 +19,8 @@ namespace Usb.Net.Sample
         {
             var devices = WindowsDeviceBase.GetConnectedDeviceInformations(WindowsDeviceConstants.GUID_DEVINTERFACE_USB_DEVICE);
 
-            var device = devices.FirstOrDefault(d => d.DevicePath.ToLower().Contains("2b24"));
+            //var device = devices.FirstOrDefault(d => d.DevicePath.ToLower().Contains("2b24"));
+            var device = devices.FirstOrDefault(d => d.DevicePath.ToLower().Contains("1209"));
 
             var windowsUsbDevice = new WindowsUsbDevice(device.DevicePath, 64, 64);
 
