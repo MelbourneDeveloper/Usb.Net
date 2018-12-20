@@ -88,21 +88,26 @@ namespace Usb.Net.UWP
 
         public async Task<byte[]> ReadAsync()
         {
-            var bytes = new byte[64];
-            var buffer = bytes.AsBuffer();
+
+            var dataPacketLength = (uint)64;
+
+            var buffer = new Windows.Storage.Streams.Buffer(dataPacketLength);
+
             var setupPacket = new UsbSetupPacket()
             {
                 RequestType = new UsbControlRequestType()
                 {
-                    Recipient = UsbControlRecipient.Endpoint,
+                    Recipient = UsbControlRecipient.Device,
                     //Direction = UsbTransferDirection.In
-                }
+                },
+                Length = dataPacketLength
             };
 
             var buffer2 = await _UsbDevice.SendControlInTransferAsync(setupPacket, buffer);
 
-            var stream = buffer2.AsStream();
-            stream.Read(bytes, 0, 64);
+            //var bytes = new byte[64];
+            //var stream = buffer2.AsStream();
+            //stream.Read(bytes, 0, 64);
 
             var returnValue = buffer2.ToArray();
 
@@ -111,8 +116,14 @@ namespace Usb.Net.UWP
 
         public async Task WriteAsync(byte[] bytes)
         {
-            var buffer = bytes.AsBuffer();
 
+            //var writer = new DataWriter();
+
+            //writer.WriteBytes(bytes);
+
+            //// The buffer with the data
+            //var bufferToSend = writer.DetachBuffer();
+            var bufferToSend = bytes.AsBuffer();
             try
             {
 
@@ -120,12 +131,16 @@ namespace Usb.Net.UWP
                 {
                     RequestType = new UsbControlRequestType()
                     {
-                        Recipient = UsbControlRecipient.Endpoint,
+                        Direction = UsbTransferDirection.Out,
+                        Recipient = UsbControlRecipient.Device,
+
                         //Direction = UsbTransferDirection.Out,
-                    }
+                    },
+                    Value = 0,
+                    Length = bufferToSend.Length
                 };
 
-                await _UsbDevice.SendControlOutTransferAsync(setupPacket, buffer);
+                await _UsbDevice.SendControlOutTransferAsync(setupPacket, bufferToSend);
             }
             catch (ArgumentException ex)
             {
