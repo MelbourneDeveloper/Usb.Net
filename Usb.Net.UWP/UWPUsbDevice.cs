@@ -63,6 +63,10 @@ namespace Usb.Net.UWP
             {
                 Connected?.Invoke(this, new EventArgs());
             }
+            else
+            {
+                throw new Exception($"Could not connect to device with Device Id {DeviceId}. Check that the package manifest has been configured to allow this device.");
+            }
         }
 
         private static async Task<UsbDevice> GetDevice(string id)
