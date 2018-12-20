@@ -17,7 +17,7 @@ namespace Usb.Net.UWP
         #endregion
 
         #region Fields
-        private UsbDevice _HidDevice;
+        private UsbDevice _UsbDevice;
         private readonly bool _IsReading;
         private IBuffer _LastReadData;
         #endregion
@@ -25,9 +25,7 @@ namespace Usb.Net.UWP
         #region Public Properties
         public int VendorId { get; set; }
         public int ProductId { get; set; }
-
         public string DeviceId { get; set; }
-        public bool DataHasExtraByte { get; set; } = true;
         #endregion
 
         #region Event Handlers
@@ -39,11 +37,6 @@ namespace Usb.Net.UWP
             {
                 bytes = new byte[args.Report.Data.Length];
                 stream.Read(bytes, 0, (int)args.Report.Data.Length);
-            }
-
-            if (DataHasExtraByte)
-            {
-                bytes = Helpers.RemoveFirstByte(bytes);
             }
 
             return bytes;
@@ -59,70 +52,14 @@ namespace Usb.Net.UWP
         {
             DeviceId = deviceId;
         }
-
-        /// <summary>
-        /// TODO: Further filter by UsagePage. The problem is that this syntax never seems to work: AND System.DeviceInterface.Hid.UsagePage:=?? 
-        /// </summary>
-        public UWPUsbDevice(int vendorId, int productId)
-        {
-            VendorId = vendorId;
-            ProductId = productId;
-        }
         #endregion
 
         #region Private Methods
         public async Task InitializeAsync()
         {
-            //TODO: Put a lock here to stop reentrancy of multiple calls
+            _UsbDevice = await GetDevice(DeviceId);
 
-            //TODO: Dispose but this seems to cause initialization to never occur
-            //Dispose();
-
-            Logger.Log("Initializing Hid device", null, nameof(UWPUsbDevice));
-
-            if (string.IsNullOrEmpty(DeviceId))
-            {
-                var foundDevices = await UWPHelpers.GetDevicesByProductAndVendorAsync(VendorId, ProductId);
-
-                if (foundDevices.Count == 0)
-                {
-                    throw new Exception($"There were no enabled devices connected with the ProductId of {ProductId} and VendorId of {VendorId}");
-                }
-
-                foreach (var deviceInformation in foundDevices)
-                {
-                    try
-                    {
-                        //Attempt to connect
-                        Logger.Log($"Attempting to connect to device Id {deviceInformation.Id} ...", null, nameof(UWPUsbDevice));
-
-                        var hidDevice = await GetDevice(deviceInformation.Id);
-
-                        if (hidDevice != null)
-                        {
-                            _HidDevice = hidDevice;
-                            //Connection was successful
-                            DeviceId = deviceInformation.Id;
-                            break;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.Log($"Error attempting to connect to {deviceInformation.Id}", ex, nameof(UWPUsbDevice));
-                    }
-                }
-
-                if (string.IsNullOrEmpty(DeviceId))
-                {
-                    throw new Exception($"Attempted to connect to {foundDevices.Count} devices, but they all failed to connect");
-                }
-            }
-            else
-            {
-                _HidDevice = await GetDevice(DeviceId);
-            }
-
-            if (_HidDevice != null)
+            if (_UsbDevice != null)
             {
                 Connected?.Invoke(this, new EventArgs());
             }
@@ -140,12 +77,12 @@ namespace Usb.Net.UWP
         #region Public Methods
         public async Task<bool> GetIsConnectedAsync()
         {
-            return _HidDevice != null;
+            return _UsbDevice != null;
         }
 
         public void Dispose()
         {
-            _HidDevice.Dispose();
+            _UsbDevice.Dispose();
         }
 
         public async Task<byte[]> ReadAsync()
@@ -162,20 +99,8 @@ namespace Usb.Net.UWP
             return retVal;
         }
 
-        public async Task WriteAsync(byte[] data)
+        public async Task WriteAsync(byte[] bytes)
         {
-            byte[] bytes;
-            if (DataHasExtraByte)
-            {
-                bytes = new byte[data.Length + 1];
-                Array.Copy(data, 0, bytes, 1, data.Length);
-                bytes[0] = 0;
-            }
-            else
-            {
-                bytes = data;
-            }
-
             var buffer = bytes.AsBuffer();
 
             try
@@ -191,7 +116,7 @@ namespace Usb.Net.UWP
                     }
                 };
 
-                _LastReadData = await _HidDevice.SendControlInTransferAsync(setupPacket, buffer);
+                _LastReadData = await _UsbDevice.SendControlInTransferAsync(setupPacket, buffer);
 
             }
             catch (ArgumentException ex)
