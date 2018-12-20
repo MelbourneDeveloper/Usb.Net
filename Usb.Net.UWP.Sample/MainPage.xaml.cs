@@ -21,7 +21,19 @@ namespace Usb.Net.UWP.Sample
         {
             Loaded -= MainPage_Loaded;
             var allDevices = await UWPHelpers.GetDevicesByProductAndVendorAsync(0,0);
-            var trezorUsbDevice = allDevices.FirstOrDefault(d => d.Id.ToLower().Contains("534c") && !d.Id.ToLower().Contains("hid"));
+            //Old firmware
+            var trezorUsbDeviceInformation = allDevices.FirstOrDefault(d => d.Id.ToLower().Contains("534c") && !d.Id.ToLower().Contains("hid"));
+            var trezorUsbDevice = new UWPUsbDevice(trezorUsbDeviceInformation.Id);
+            await trezorUsbDevice.InitializeAsync();
+
+            var buffer = new byte[64];
+            buffer[0] = 0x3f;
+            buffer[1] = 0x23;
+            buffer[2] = 0x23;
+
+            await trezorUsbDevice.WriteAsync(buffer);
+
+            var readBuffer = await trezorUsbDevice.ReadAsync();
         }
     }
 }
