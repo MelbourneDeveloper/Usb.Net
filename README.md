@@ -1,6 +1,6 @@
 # Usb.Net
 
-Cross platform C# library for talking to HID devices in a uniform way through dependency injection.
+Cross platform C# library for talking to USB devices in a uniform way through dependency injection.
 
 ![diagram](https://github.com/MelbourneDeveloper/Device.Net/blob/master/Diagram.png)
 
